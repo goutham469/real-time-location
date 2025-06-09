@@ -11,9 +11,14 @@ const io = new Server( server , {
     cors:{ origin:"*" }
 } )
 
+const userLocations = []
+
 app.use(cors())
 app.get("/" , (req,res)=>{
     res.send("Server running ... ")
+})
+app.get("/online" , (req,res)=>{
+    res.send(userLocations)
 })
 
 app.post("/auth" , (req,res) => {
@@ -31,20 +36,21 @@ app.post("/auth" , (req,res) => {
     }
 } )
 
-const userLocations = []
+
 
 io.on( "connection" , (socket) => {
     console.log("new connection");
     
     socket.on("updateLocation", (data) => {
-    const index = userLocations.findIndex((u) => u.id === socket.id);
-    if (index === -1) {
-      userLocations.push({ id: socket.id, ...data });
-    } else {
-      userLocations[index] = { id: socket.id, ...data };
-    }
+        console.log("updateLocationd", data);
+        const index = userLocations.findIndex((u) => u.id === socket.id);
+        if (index === -1) {
+        userLocations.push({ id: socket.id, ...data });
+        } else {
+        userLocations[index] = { id: socket.id, ...data };
+        }
 
-    io.emit("locations", userLocations.filter((u) => u.id !== socket.id));
+        io.emit("locations", userLocations.filter((u) => u.id !== socket.id));
   });
 
   socket.on("disconnect", () => {
