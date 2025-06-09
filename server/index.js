@@ -54,4 +54,4 @@ io.on( "connection" , (socket) => {
 
 });
 
-server.listen(5000, () => console.log("Server started on http://localhost:5000"));
+server.listen(5002, () => console.log("Server started on http://localhost:5002"));
