@@ -11,7 +11,7 @@ const io = new Server( server , {
     cors:{ origin:"*" }
 } )
 
-const userLocations = []
+let userLocations = []
 
 app.use(cors())
 app.get("/" , (req,res)=>{
