@@ -14,7 +14,8 @@ function Details() {
         (position) => {
             const { latitude, longitude } = position.coords;
             setCoOrd({ latitude, longitude });
-            socket.emit("update-location" , { latitude:latitude, longitude:longitude , username:localStorage.getItem("username") });
+            const obj = { latitude:latitude, longitude:longitude , username:localStorage.getItem("username") }
+            socket.emit("update-location" , obj );
         },
         (err) => console.error(err),
         {
@@ -24,7 +25,7 @@ function Details() {
         }
         );
 
-        socket.on("location" , (data) => {
+        socket.on("locations" , (data) => {
           setOthers(data)
         })
 

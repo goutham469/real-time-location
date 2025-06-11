@@ -21,27 +21,14 @@ app.get("/online" , (req,res)=>{
     res.send(userLocations)
 })
 
-app.post("/auth" , (req,res) => {
-    console.log(req.body);
 
-    try{
-        const { username , password } = req.body;
-
-
-    }catch(err){
-        res.send({
-            success:false,
-            error:err.message
-        })
-    }
-} )
 
 
 
 io.on( "connection" , (socket) => {
     console.log("new connection");
     
-    socket.on("updateLocation", (data) => {
+    socket.on("update-location", (data) => {
         console.log("updateLocationd", data);
         const index = userLocations.findIndex((u) => u.id === socket.id);
         if (index === -1) {
